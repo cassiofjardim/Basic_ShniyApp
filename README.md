@@ -13,6 +13,12 @@ Projeto simples de **dashboard financeiro** em **R Shiny**, com uma tela de logi
   - Receita por mês (ggplot2)
 - **Tabela detalhada** com busca/filtros (reactable).
 
+## Prints
+
+![Tela de login](prints/login.png)
+![Dashboard (tela 1)](prints/tela1.png)
+![Dashboard (tela 2)](prints/tela2.png)
+
 ## Como rodar 🚀
 
 1) Instale os pacotes (opcional, se ainda não tiver):
@@ -57,4 +63,3 @@ Se quiser testar com outros dados, mantenha as colunas:
 
 - O tema do `ggplot2` é aplicado se existir `R/helpers_theme.R` (já incluso no projeto).
 - Este projeto é intencionalmente simples, focado em servir como base para evoluções.
-
