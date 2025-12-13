@@ -20,7 +20,7 @@ if (file.exists("R/helpers_theme.R")) {
   }
 }
 
-ui <- tagList(
+ui <- bootstrapPage(
   tags$head(
     tags$title("Dashboard Financeiro – simples, organizado e automático."),
     

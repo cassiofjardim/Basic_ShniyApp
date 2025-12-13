@@ -49,25 +49,41 @@ mod_dashboard_ui <- function(id) {
           div(
             class = "card kpi-card",
             div(class = "kpi-label", "Receita Total"),
-            div(class = "kpi-value", textOutput(ns("kpi_total_receita")))
+            div(class = "kpi-value", textOutput(ns("kpi_total_receita"))),
+            div(
+              class = "kpi-note",
+              "Soma de todas as vendas registradas no período. Use este número como referência para comparar crescimento."
+            )
           ),
           
           div(
             class = "card kpi-card",
             div(class = "kpi-label", "Qtde de Transações"),
-            div(class = "kpi-value", textOutput(ns("kpi_qtd_transacoes")))
+            div(class = "kpi-value", textOutput(ns("kpi_qtd_transacoes"))),
+            div(
+              class = "kpi-note",
+              "Quantidade total de lançamentos. Ajuda a entender volume e sazonalidade junto do ticket médio."
+            )
           ),
           
           div(
             class = "card kpi-card",
             div(class = "kpi-label", "Ticket Médio"),
-            div(class = "kpi-value", textOutput(ns("kpi_ticket_medio")))
+            div(class = "kpi-value", textOutput(ns("kpi_ticket_medio"))),
+            div(
+              class = "kpi-note",
+              "Valor médio por transação. Bom indicador de mix de produtos, preços e comportamento do cliente."
+            )
           ),
           
           div(
             class = "card kpi-card",
             div(class = "kpi-label", "Nº de Regiões"),
-            div(class = "kpi-value", textOutput(ns("kpi_n_regioes")))
+            div(class = "kpi-value", textOutput(ns("kpi_n_regioes"))),
+            div(
+              class = "kpi-note",
+              "Cobertura geográfica com vendas no período. Use para identificar expansão e concentração de receita."
+            )
           )
         ),
         
@@ -84,10 +100,101 @@ mod_dashboard_ui <- function(id) {
               class = "card card-map card-chart-lg",
               div(class = "card-title", "Receita por região"),
               div(
+                class = "card-subtitle",
+                "Comparação de desempenho entre regiões. Passe o mouse para detalhes e identifique as maiores contribuições."
+              ),
+              div(
                 class = "card-body",
                 div(
-                  class = "hc-chart",
-                  highchartOutput(ns("map_receita_regiao"), height = "100%")
+                  class = "card-region-tabs",
+                  tabsetPanel(
+                    type = "pills",
+                    selected = "Nacional",
+                    tabPanel(
+                      "Nacional",
+                      div(
+                        class = "card-visual",
+                        div(
+                          class = "hc-chart",
+                          highchartOutput(ns("map_receita_regiao"), height = "420px")
+                        )
+                      )
+                    ),
+                    tabPanel(
+                      "Nordeste",
+                      div(
+                        class = "region-tab",
+                        p(class = "region-p", "📍 Região com maior participação no período e boa consistência de volume."),
+                        p(class = "region-p", "📈 Sugestão: mantenha o ritmo e teste campanhas de upsell nas categorias mais fortes."),
+                        p(class = "region-p", "💡 Verifique picos por mês para entender sazonalidade e oportunidades de antecipação."),
+                        p(class = "region-p", "🧩 Leitura rápida: quando a receita cresce com ticket estável, o ganho vem de volume; quando o volume cai, o ticket ajuda a sustentar o resultado."),
+                        p(class = "region-p", "🎯 Ação sugerida: priorize os 2 canais mais eficientes e crie uma oferta “âncora” (produto/serviço) para puxar itens complementares."),
+                        p(class = "region-p", "📌 Monitoramento: acompanhe a dispersão por cidade/cluster para não depender de poucos pontos de venda."),
+                        p(class = "region-p", "✅ Checklist da semana: revisar meta, ajustar verba por canal e validar se a categoria líder continua crescendo."),
+                        p(class = "region-p", "🔎 Pergunta guia: quais transações repetem padrão (mesmo canal/categoria) e podem virar playbook?")
+                      )
+                    ),
+                    tabPanel(
+                      "Sudeste",
+                      div(
+                        class = "region-tab",
+                        p(class = "region-p", "🏙️ Receita alta e grande potencial de escala por capilaridade de canais."),
+                        p(class = "region-p", "🎯 Foco: otimizar conversão nos canais com maior tráfego e menor retorno."),
+                        p(class = "region-p", "✅ Acompanhe ticket médio para identificar mix premium vs. volume."),
+                        p(class = "region-p", "⚡ Oportunidade: pequenas melhorias no funil (visita → compra) costumam gerar impacto grande no total por causa do volume."),
+                        p(class = "region-p", "🧪 Testes: rode A/B de oferta (desconto vs. bônus) e observe mudança em ticket e frequência."),
+                        p(class = "region-p", "🧭 Segmentação: separe por canal e categoria para entender onde o crescimento é saudável (margem + recorrência)."),
+                        p(class = "region-p", "📦 Mix: categorias com alta participação podem estar saturadas; busque as que crescem mês a mês para ganhar share."),
+                        p(class = "region-p", "📌 Monitoramento: atenção a “picos” pontuais — valide se são campanhas ou outliers no detalhamento."),
+                        p(class = "region-p", "🤝 Execução: alinhe metas por canal e acompanhe semanalmente a diferença entre planejado e realizado.")
+                      )
+                    ),
+                    tabPanel(
+                      "Sul",
+                      div(
+                        class = "region-tab",
+                        p(class = "region-p", "🧭 Receita relevante e boa estabilidade no período analisado."),
+                        p(class = "region-p", "🔎 Explore variações por canal para identificar ganho rápido de eficiência."),
+                        p(class = "region-p", "📊 Use o detalhamento para checar recorrência e categorias com maior margem."),
+                        p(class = "region-p", "🧱 Base sólida: estabilidade é ótima para padronizar processos e reduzir custo de aquisição ao longo do tempo."),
+                        p(class = "region-p", "🎯 Ação sugerida: reforçar o canal mais previsível e abrir um segundo canal “de crescimento” com metas menores."),
+                        p(class = "region-p", "📈 Olhe tendência: se a receita cresce, mas o ticket cai, investigue descontos e condições comerciais."),
+                        p(class = "region-p", "🧩 Mix: avalie categorias “meio de funil” (nem as maiores nem as menores) — elas costumam ter melhor potencial de expansão."),
+                        p(class = "region-p", "✅ Checklist: revisar top 20 transações por valor, comparar com a média e entender o que gerou os maiores resultados."),
+                        p(class = "region-p", "🗺️ Pergunta guia: quais canais aumentam o ticket sem derrubar volume?")
+                      )
+                    ),
+                    tabPanel(
+                      "Centro-Oeste",
+                      div(
+                        class = "region-tab",
+                        p(class = "region-p", "🌾 Receita próxima do Sul — pode responder bem a ajustes de mix e oferta."),
+                        p(class = "region-p", "⚙️ Teste ações por categoria e acompanhe o impacto mês a mês."),
+                        p(class = "region-p", "🤝 Se houver representante, avalie cobertura e produtividade."),
+                        p(class = "region-p", "🧭 Contexto: a performance pode variar bastante por praça; foque nos clusters com melhor retorno para ganhar escala."),
+                        p(class = "region-p", "📦 Estratégia: combine uma categoria “carro-chefe” com uma de expansão para aumentar participação sem canibalizar."),
+                        p(class = "region-p", "🎯 Ação sugerida: padronize abordagem comercial por canal (mensagem, preço e prazo) e meça impacto na conversão."),
+                        p(class = "region-p", "📊 Monitoramento: acompanhe frequência de compra (recorrência) para diferenciar crescimento real de picos pontuais."),
+                        p(class = "region-p", "✅ Checklist: revisar performance por canal, cortar o pior e reforçar o melhor com metas realistas."),
+                        p(class = "region-p", "🔎 Pergunta guia: onde a receita cresce com o menor esforço (custo/tempo) de execução?")
+                      )
+                    ),
+                    tabPanel(
+                      "Norte",
+                      div(
+                        class = "region-tab",
+                        p(class = "region-p", "🌿 Menor participação no total, mas com espaço para crescimento incremental."),
+                        p(class = "region-p", "🚀 Ações rápidas: reforçar o melhor canal e simplificar a oferta."),
+                        p(class = "region-p", "🗺️ Monitore concentração: poucos pontos podem puxar o resultado."),
+                        p(class = "region-p", "🧩 Ganhos incrementais: foque em repetibilidade (processo) antes de buscar grandes saltos de volume."),
+                        p(class = "region-p", "🎯 Ação sugerida: escolha 1 categoria prioritária e 1 canal principal para executar com consistência por 2–4 semanas."),
+                        p(class = "region-p", "📦 Oferta: reduza fricção (menos opções, mensagem clara) e destaque benefícios para elevar conversão."),
+                        p(class = "region-p", "📈 Acompanhe ticket + volume: se o volume subir e o ticket se mantiver, você ganha escala com saúde."),
+                        p(class = "region-p", "✅ Checklist: revisar transações de maior valor, entender origem e replicar o padrão em campanhas pequenas."),
+                        p(class = "region-p", "🔎 Pergunta guia: quais ajustes simples (prazo, combo, canal) melhoram o resultado sem aumentar complexidade?")
+                      )
+                    )
+                  )
                 )
               )
             ),
@@ -100,10 +207,21 @@ mod_dashboard_ui <- function(id) {
                 class = "card card-chart",
                 div(class = "card-title", "Receita por canal"),
                 div(
+                  class = "card-subtitle",
+                  "Mostra quais canais trazem mais receita. Útil para ajustar investimento e priorizar ações comerciais."
+                ),
+                div(
                   class = "card-body",
                   div(
-                    class = "hc-chart",
-                    highchartOutput(ns("bar_canal"), height = "100%")
+                    class = "card-visual",
+                    div(
+                      class = "hc-chart",
+                      highchartOutput(ns("bar_canal"), height = "320px")
+                    )
+                  ),
+                  div(
+                    class = "card-note",
+                    "Interpretação rápida: canais com baixo volume e alto valor podem ser nichos estratégicos."
                   )
                 )
               ),
@@ -112,10 +230,21 @@ mod_dashboard_ui <- function(id) {
                 class = "card card-chart",
                 div(class = "card-title", "Receita por categoria"),
                 div(
+                  class = "card-subtitle",
+                  "Distribuição da receita por categoria de produto/serviço. Ajuda a enxergar o mix e o peso relativo."
+                ),
+                div(
                   class = "card-body",
                   div(
-                    class = "hc-chart",
-                    highchartOutput(ns("donut_categoria"), height = "100%")
+                    class = "card-visual",
+                    div(
+                      class = "hc-chart",
+                      highchartOutput(ns("donut_categoria"), height = "320px")
+                    )
+                  ),
+                  div(
+                    class = "card-note",
+                    "Dica: categorias com participação pequena, mas crescimento consistente, podem merecer campanhas dedicadas."
                   )
                 )
               )
@@ -130,8 +259,19 @@ mod_dashboard_ui <- function(id) {
               class = "card card-chart card-chart-md",
               div(class = "card-title", "Receita por mês"),
               div(
+                class = "card-subtitle",
+                "Evolução mensal da receita. Use para identificar tendência, sazonalidade e pontos de atenção no período."
+              ),
+              div(
                 class = "card-body",
-                plotOutput(ns("bar_mes"), height = "100%")
+                div(
+                  class = "card-visual",
+                  plotOutput(ns("bar_mes"), height = "300px")
+                ),
+                div(
+                  class = "card-note",
+                  "Sugestão: compare meses consecutivos para ver aceleração/desaceleração e investigar variações fora do padrão."
+                )
               )
             ),
             
@@ -139,8 +279,19 @@ mod_dashboard_ui <- function(id) {
               class = "card card-table",
               div(class = "card-title", "Detalhamento de vendas"),
               div(
+                class = "card-subtitle",
+                "Lista de transações para auditoria e drill-down. Pesquise, filtre e ordene para encontrar padrões."
+              ),
+              div(
                 class = "card-body card-body-table",
-                reactableOutput(ns("tabela_detalhes"))
+                div(
+                  class = "card-note card-note-top",
+                  "Dica: filtre por região/canal/categoria para cruzar com os gráficos e validar hipóteses rapidamente."
+                ),
+                div(
+                  class = "card-visual",
+                  reactableOutput(ns("tabela_detalhes"))
+                )
               )
             )
           )
@@ -387,6 +538,12 @@ mod_dashboard_server <- function(id, user_email_reactive, logged_reactive) {
         df <- dados_mes()
         req(!rlang::is_empty(df))
         
+        base_theme <- if (exists("theme_dashboard")) {
+          theme_dashboard()
+        } else {
+          ggplot2::theme_minimal()
+        }
+        
         ggplot(df, aes(x = ano_mes, y = receita)) +
           geom_col(fill = "#2563EB", width = 25) +
           scale_y_continuous(
@@ -394,16 +551,17 @@ mod_dashboard_server <- function(id, user_email_reactive, logged_reactive) {
               scales::comma(x, big.mark = ".", decimal.mark = ",")
             }
           ) +
-          scale_x_date(date_labels = "%b/%Y") +
+          scale_x_date(date_labels = "%b/%y") +
           labs(
             x = NULL,
             y = NULL
           ) +
-          if (exists("theme_dashboard")) {
-            theme_dashboard()
-          } else {
-            ggplot2::theme_minimal()
-          }
+          base_theme +
+          ggplot2::theme(
+            plot.margin = grid::unit(c(4, 4, 4, 4), "pt"),
+            axis.text.x = ggplot2::element_text(size = 9),
+            axis.text.y = ggplot2::element_text(size = 9)
+          )
       })
       
       # 8) Tabela detalhada (reactable) -------------------------------
