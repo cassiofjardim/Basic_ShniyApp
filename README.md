@@ -62,4 +62,7 @@ Se quiser testar com outros dados, mantenha as colunas:
 ## Observações
 
 - O tema do `ggplot2` é aplicado se existir `R/helpers_theme.R` (já incluso no projeto).
-- Este projeto é intencionalmente simples, focado em servir como base para evoluções.
+- Este projeto é intencionalmente simples, focado em servir como base para evoluções.´
+
+Testando o fluxo de branches e commits2.
+
